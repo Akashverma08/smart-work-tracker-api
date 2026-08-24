@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEmployeeCommand } from './commands/create-employee.command';
-import {UpdateEmployeeCommand} from "./commands/update-employee.command";
-import {UpdateEmployeeDto} from "./dto/update-employee.dto";
+import { UpdateEmployeeCommand } from "./commands/update-employee.command";
+import { UpdateEmployeeDto } from "./dto/update-employee.dto";
 
 @Injectable()
 export class EmployeesService {
@@ -26,13 +26,19 @@ export class EmployeesService {
 
     //Splice Method  Psoting
 
-    /*if (command.index >=0) {
-      this.employees.splice(command.index, 0, employee);
+    if (command.index >= 0 && command.index <= this.employees.length) {
+      for (let i = this.employees.length; i > command.index; i--) {
+        this.employees[i] = this.employees[i - 1];
+      }
+
+      this.employees[command.index] = employee;
     } else {
       this.employees.push(employee);
-    }*/
+    }
 
-    const newEmployee=[];
+
+
+    /*const newEmployee: typeof this.employees=[];
 
     for(let i=0;i<this.employees.length+1;i++){
         if(i===command.index || command.index===undefined){
@@ -43,20 +49,20 @@ export class EmployeesService {
         }
     }
 
-    this.employees=newEmployee;
+    this.employees=newEmployee; */
 
 
     return this.employees;
   }
 
   findAll() {
-    if(this.employees.length===0){
-        return "employee not found";
-    }else{
-        return this.employees;
+    if (this.employees.length === 0) {
+      return "employee not found";
+    } else {
+      return this.employees;
 
     }
-    
+
   }
 
   //index based update
@@ -75,36 +81,68 @@ export class EmployeesService {
 
   }*/
 
-    // find() and map() method for updation
+  // find() and map() method for updation
 
-    /*update(id :number,updateEmployeeDto: UpdateEmployeeDto){
-        const emp=this.employees.find((e)=> e.id===id);
-        if(!emp){
-            return {
-                message:"User not found",
-            }
-        }
+  /*update(id :number,updateEmployeeDto: UpdateEmployeeDto){
+      const emp=this.employees.find((e)=> e.id===id);
+      if(!emp){
+          return {
+              message:"User not found",
+          }
+      }
 
-        this.employees=this.employees.map((e)=> e.id===id ? {...e,...updateEmployeeDto} : e);
+      this.employees=this.employees.map((e)=> e.id===id ? {...e,...updateEmployeeDto} : e);
 
-        return this.employees.find((e)=> e.id===id)
-    }*/
+      return this.employees.find((e)=> e.id===id)
+  }*/
 
-    update(id:number,updateEmployeeDto:UpdateEmployeeDto){
-        const emp=this.employees.find((e)=> e.id===id);
-        if(!emp){
-            return {
-                message:"user not found",
-            }
-        }
+  findEmployee(
+    id?: number,
+    name?: string,
+    department?: string,
+  ) {
+    let result = this.employees;
 
-        Object.assign(emp,updateEmployeeDto);
-
-        return this.employees.find((e)=> e.id===id);
-
-
-
+    if (id !== undefined) {
+      result = result.filter((e) => e.id === id);
     }
+
+    if (name !== undefined) {
+      result = result.filter(
+        (e) => e.name.toLowerCase() === name.toLowerCase()
+      );
+    }
+
+    if (department !== undefined) {
+      result = result.filter(
+        (e) => e.department.toLowerCase() === department.toLowerCase()
+      );
+    }
+
+    if (result.length === 0) {
+      return {
+        message: "employee not found",
+      };
+    }
+
+    return result;
+  }
+
+  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    const emp = this.employees.find((e) => e.id === id);
+    if (!emp) {
+      return {
+        message: "user not found",
+      }
+    }
+
+    Object.assign(emp, updateEmployeeDto);
+
+    return this.employees.find((e) => e.id === id);
+
+
+
+  }
 
 
 }

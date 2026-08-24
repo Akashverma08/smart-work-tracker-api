@@ -4,6 +4,7 @@ import { EmployeesController } from './employees.controller';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeHandler } from './handlers/create-employee.handler';
 import { GetEmployeesHandler } from "./handlers/get-employee.handler";
+import {FindEmployeeHandler} from "./handlers/find-employee.handler"
 
 import { UpdateEmployeeHandler } from './handlers/update-employee.handler';
 
@@ -16,7 +17,8 @@ import { UpdateEmployeeHandler } from './handlers/update-employee.handler';
     EmployeesService,
     CreateEmployeeHandler,
     GetEmployeesHandler,
-    UpdateEmployeeHandler
+    UpdateEmployeeHandler,
+    FindEmployeeHandler
   ],
 })
 export class EmployeesModule {}

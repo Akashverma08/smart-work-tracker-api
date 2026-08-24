@@ -3,6 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { CreateEmployeeCommand } from './commands/create-employee.command';
 import { GetEmployeesQuery } from './queries/get-employees.query';
+import { FindEmployeeQuery } from './queries/find-employee.query';
 
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { UpdateEmployeeCommand } from './commands/update-employee.command';
@@ -33,6 +34,21 @@ export class EmployeesController {
     findAll() {
         return this.queryBus.execute(
             new GetEmployeesQuery(),
+        );
+    }
+
+    @Get('search')
+    findEmployee(
+        @Query('id') id?: string,
+        @Query('name') name?: string,
+        @Query('department') department?: string,
+    ) {
+        return this.queryBus.execute(
+            new FindEmployeeQuery(
+                id ? Number(id) : undefined,
+                name,
+                department,
+            ),
         );
     }
 
