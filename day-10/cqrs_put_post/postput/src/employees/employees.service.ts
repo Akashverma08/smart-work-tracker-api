@@ -24,7 +24,7 @@ export class EmployeesService {
       rank: command.rank,
     };
 
-    //Splice Method  Psoting
+    //Sliding Window
 
     if (command.index >= 0 && command.index <= this.employees.length) {
       for (let i = this.employees.length; i > command.index; i--) {
