@@ -1,7 +1,6 @@
-export default function Login(){
-    return(
-        <div>
-            <h1>Login</h1>
-        </div>
-    )
+import Login from "@/pages/Login/Login"
+export default function Page(){
+
+    return <Login/>
+
 }
