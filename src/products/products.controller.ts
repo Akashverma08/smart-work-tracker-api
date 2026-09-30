@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Query,Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Query,Post, Delete, Patch } from '@nestjs/common';
 import {ProductsService} from "./products.service.js";
 
 
@@ -34,7 +34,20 @@ export class ProductsController {
     @Post("/add")
     createUser(@Body() body:BodyDTO){
         return this.productsService.createUser(body);
-        
+    
+    }
+
+    @Delete("/:id")
+    deleteUser(@Param("id") id:string){
+        return this.productsService.deleteUser(Number(id));
+
+    }
+
+
+    @Patch("/:id")
+    updateUser(@Param("id") id:string,@Body() body:BodyDTO){
+        return this.productsService.updateUser(Number(id),body)
+
     }
 
 }

@@ -49,9 +49,7 @@ export class ProductsService {
         }
         if (query?.email) {
             return this.products.filter((user) => user.email.toLowerCase().includes(query.email!.toLowerCase()));
-
         }
-
         return this.products;
 
     }
@@ -80,6 +78,41 @@ export class ProductsService {
         products.push(newUser);
 
         return newUser;
+
+    }
+
+
+    deleteUser(id:number){
+        const index=this.products.findIndex((product)=>product.id===id);
+        if(index===-1){
+            return " User Not Found"
+        }
+        const deletedUser=this.products.splice(index,1);
+        return deletedUser[0];
+
+    }
+
+    updateUser(id:number,body:BodyDTO){
+        const user=this.products.find((u)=> u.id===id);
+
+        if(!user){
+            return {
+                message:"User Not found"
+            }
+        }
+
+        if(body.firstName!==undefined){
+            user.firstName=body.firstName;
+        }
+
+        if(body.lastName!==undefined){
+            user.lastName=body.lastName;
+        }
+        if(body.email!==undefined){
+            user.email=body.email;
+        }
+
+        return user;
 
     }
 
